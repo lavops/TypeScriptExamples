@@ -1,27 +1,17 @@
-// Function Types, Function as Type, Callbacks
+// Unknown, Never Type
+let userInput: unknown;
+let username: string;
 
-function addFunction(n1: number, n2: number): number {
-    return n1 + n2;
+userInput = 5;
+userInput = 'Max';
+
+// Unknown mora uvek da se pita koji je tip
+if(typeof userInput === 'string') {
+    username = userInput;
 }
 
-function printResult(num: number): void {
-    console.log('Result: ' + num);
+function generateError(message: string, code: number): never {
+    throw {message: message, errorCode: code};
 }
 
-function returnUndefined(): undefined {
-    return;
-}
-
-printResult(addFunction(5, 12));
-
-let combinedValues: (a: number, b: number) => number;
-combinedValues = addFunction;
-printResult(combinedValues(5, 12));
-
-function addAndHandle(n1: number, n2: number, cb: (number) => void) {
-    const result = n1 + n2;
-
-    cb(result);
-} 
-
-addAndHandle(10, 20, printResult);
+generateError('An error occured!', 500);
