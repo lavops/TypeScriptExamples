@@ -1,25 +1,27 @@
-// Union Types, Literal Types, Type alias
+// Function Types, Function as Type, Callbacks
 
-type CustomType = number | string;
-type LiteralType = 'as-number' | 'as-text';
-
-function combine(input1: CustomType, input2: CustomType, resultConversion: LiteralType) {
-    let result;
-    if(typeof input1 === 'number' && typeof input2 === 'number' || resultConversion === 'as-number') {
-        result = +input1 + +input2;
-    }
-    else {
-        result = input1.toString() + input2.toString();
-    }
-
-    return result;
+function addFunction(n1: number, n2: number): number {
+    return n1 + n2;
 }
 
-const combineAges = combine(30, 26, 'as-number');
-console.log(combineAges);
+function printResult(num: number): void {
+    console.log('Result: ' + num);
+}
 
-const combineStringAges = combine('30', '26', 'as-number');
-console.log(combineStringAges);
+function returnUndefined(): undefined {
+    return;
+}
 
-const combineNames = combine('Max', 'Anna', 'as-text');
-console.log(combineNames);
+printResult(addFunction(5, 12));
+
+let combinedValues: (a: number, b: number) => number;
+combinedValues = addFunction;
+printResult(combinedValues(5, 12));
+
+function addAndHandle(n1: number, n2: number, cb: (number) => void) {
+    const result = n1 + n2;
+
+    cb(result);
+} 
+
+addAndHandle(10, 20, printResult);

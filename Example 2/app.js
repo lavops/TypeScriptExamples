@@ -1,17 +1,19 @@
-// Union Types, Literal Types, 
-function combine(input1, input2, resultConversion) {
-    var result;
-    if (typeof input1 === 'number' && typeof input2 === 'number' || resultConversion === 'as-number') {
-        result = +input1 + +input2;
-    }
-    else {
-        result = input1.toString() + input2.toString();
-    }
-    return result;
+// Function Types, Function as Type, Callbacks
+function addFunction(n1, n2) {
+    return n1 + n2;
 }
-var combineAges = combine(30, 26, 'as-number');
-console.log(combineAges);
-var combineStringAges = combine('30', '26', 'as-number');
-console.log(combineStringAges);
-var combineNames = combine('Max', 'Anna', 'as-text');
-console.log(combineNames);
+function printResult(num) {
+    console.log('Result: ' + num);
+}
+function returnUndefined() {
+    return;
+}
+printResult(addFunction(5, 12));
+var combinedValues;
+combinedValues = addFunction;
+printResult(combinedValues(5, 12));
+function addAndHandle(n1, n2, cb) {
+    var result = n1 + n2;
+    cb(result);
+}
+addAndHandle(10, 20, printResult);
