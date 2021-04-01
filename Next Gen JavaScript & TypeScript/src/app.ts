@@ -1,8 +1,10 @@
+// Const, Let
 const username = 'Example';
 let age = 30;
 age = 29;
 
-const add = (a: number, b: number) => {
+// Arrow funciton with default parameter
+const add = (a: number, b: number = 0) => {
     return a + b;
 }
 
@@ -18,3 +20,17 @@ if(button) {
 }
 
 printOutput(add(2,5));
+printOutput(add(1));
+
+// Spread Operator ...
+const hobbies = ['sports', 'cooking'];
+const activeHobbies = ['hiking'];
+activeHobbies.push(...hobbies);
+console.log(activeHobbies);
+
+const person = {
+    name: 'Example',
+    age: 30
+};
+
+const copiedPerson = {...person}; // BITNO
