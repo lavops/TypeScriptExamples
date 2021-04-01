@@ -1,7 +1,7 @@
 // Const, Let
 const username = 'Example';
-let age = 30;
-age = 29;
+let myAge = 30;
+myAge = 23;
 
 // Arrow funciton with default parameter
 const add = (a: number, b: number = 0) => {
@@ -29,8 +29,26 @@ activeHobbies.push(...hobbies);
 console.log(activeHobbies);
 
 const person = {
-    name: 'Example',
+    firstname: 'Example',
     age: 30
 };
 
 const copiedPerson = {...person}; // BITNO
+
+// Rest Parameters
+const addRest = (...numbers: number[]) => {
+    let result = 0;
+    return numbers.reduce((currentResult, currentValue) => {
+        return currentResult + currentValue;
+    }, 0);
+}
+
+const addedNumbers = addRest(5, 10, 15, 20);
+console.log(addedNumbers);
+
+// Array & Object Destructuring
+const [hobby1, hobby2, ...remainingHobbies] = hobbies;
+console.log(hobbies, hobby1, hobby2, remainingHobbies);
+
+const {firstname: firstname1, age: age1} = person;
+console.log(person, firstname1, age1);

@@ -1,41 +1,43 @@
 "use strict";
-var __assign = (this && this.__assign) || function () {
-    __assign = Object.assign || function(t) {
-        for (var s, i = 1, n = arguments.length; i < n; i++) {
-            s = arguments[i];
-            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
-                t[p] = s[p];
-        }
-        return t;
-    };
-    return __assign.apply(this, arguments);
-};
 // Const, Let
-var username = 'Example';
-var age = 30;
-age = 29;
+const username = 'Example';
+let myAge = 30;
+myAge = 23;
 // Arrow funciton with default parameter
-var add = function (a, b) {
-    if (b === void 0) { b = 0; }
+const add = (a, b = 0) => {
     return a + b;
 };
 console.log(add(2, 5));
-var printOutput = function (output) { return console.log(output); };
-var button = document.querySelector('button');
+const printOutput = (output) => console.log(output);
+const button = document.querySelector('button');
 if (button) {
-    button.addEventListener('click', function (event) {
+    button.addEventListener('click', (event) => {
         console.log(event);
     });
 }
 printOutput(add(2, 5));
 printOutput(add(1));
 // Spread Operator ...
-var hobbies = ['sports', 'cooking'];
-var activeHobbies = ['hiking'];
-activeHobbies.push.apply(activeHobbies, hobbies);
+const hobbies = ['sports', 'cooking'];
+const activeHobbies = ['hiking'];
+activeHobbies.push(...hobbies);
 console.log(activeHobbies);
-var person = {
-    name: 'Example',
+const person = {
+    firstname: 'Example',
     age: 30
 };
-var copiedPerson = __assign({}, person); // BITNO
+const copiedPerson = Object.assign({}, person); // BITNO
+// Rest Parameters
+const addRest = (...numbers) => {
+    let result = 0;
+    return numbers.reduce((currentResult, currentValue) => {
+        return currentResult + currentValue;
+    }, 0);
+};
+const addedNumbers = addRest(5, 10, 15, 20);
+console.log(addedNumbers);
+// Array & Object Destructuring
+const [hobby1, hobby2, ...remainingHobbies] = hobbies;
+console.log(hobbies, hobby1, hobby2, remainingHobbies);
+const { firstname: firstname1, age: age1 } = person;
+console.log(person, firstname1, age1);
