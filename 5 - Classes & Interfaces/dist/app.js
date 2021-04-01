@@ -1,14 +1,14 @@
 "use strict";
+// Class, Abstract, THIS, 
 class Department {
     constructor(id, name) {
         this.id = id;
         this.name = name;
-        //public name: string;
         this.boss = 'BOSS';
         this.employees = [];
     }
-    describe() {
-        console.log(`Department (${this.id}): ${this.name} - Boss: ${this.boss}`);
+    static createEmployee(name) {
+        return { name: name };
     }
     addEmployee(employee) {
         this.employees.push(employee);
@@ -18,17 +18,25 @@ class Department {
         console.log(this.employees);
     }
 }
-const example = new Department('d1', 'EXAMPLE DEPARMTENT');
-console.log(example);
-example.describe();
-example.addEmployee('Pera');
-example.addEmployee('Zika');
-example.printEmpolyeeInformation();
-// Inheritance, Overriding
+//public name: string;
+Department.fiscalYear = 2020;
+//const example = new Department('d1', 'EXAMPLE DEPARMTENT');
+//console.log(example);
+//
+//example.describe();
+//
+//example.addEmployee('Pera');
+//example.addEmployee('Zika');
+//
+//example.printEmpolyeeInformation();
+// Inheritance, Overriding, Getter/Setter, Static Property & Methods, 
 class ITDepartment extends Department {
     constructor(id, admins) {
         super(id, 'IT');
         this.admins = admins;
+    }
+    describe() {
+        console.log("IT DEPARTMENT");
     }
 }
 const admins = ['pera', 'zika'];
@@ -39,6 +47,16 @@ class AccountingDepartment extends Department {
         super(id, 'Accounting');
         this.reports = reports;
         this.lastReport = reports[0];
+    }
+    static getInstance() {
+        if (AccountingDepartment.instance) {
+            return this.instance;
+        }
+        this.instance = new AccountingDepartment('d1', []);
+        return this.instance;
+    }
+    describe() {
+        console.log("ACCOUNTING DEPARTMENT");
     }
     addReport(report) {
         this.reports.push(report);
@@ -66,7 +84,7 @@ class AccountingDepartment extends Department {
         this.addReport(value);
     }
 }
-const accounting = new AccountingDepartment('d3', []);
+const accounting = AccountingDepartment.getInstance();
 accounting.addReport('Not Error...');
 console.log(accounting.mostRecentReport);
 accounting.mostRecentReport = 'New Report';
@@ -74,3 +92,5 @@ console.log(accounting);
 accounting.addEmployee('Pera');
 accounting.addEmployee('Zika');
 accounting.printEmpolyeeInformation();
+const employee1 = Department.createEmployee('Proba');
+console.log(employee1, Department.fiscalYear);
