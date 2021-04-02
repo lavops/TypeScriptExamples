@@ -4,7 +4,7 @@ const e1 = {
     privilages: ['create-server'],
     startDate: new Date()
 };
-// Guard Type
+// Type Guards 
 function add(a, b) {
     if (typeof a === 'string' || typeof b === 'string') { // Type Guard
         return a.toString() + b.toString();
@@ -44,3 +44,20 @@ function useVehicle(vehicle) {
 }
 useVehicle(v1);
 useVehicle(v2);
+function moveAnimal(animal) {
+    let speed;
+    switch (animal.type) {
+        case 'bird':
+            speed = animal.flyingSpeed;
+            console.log('Moving with speed: ' + speed);
+            break;
+        case 'horse':
+            speed = animal.runningSpeed;
+            console.log('Moving with speed: ' + speed);
+            break;
+        default:
+            break;
+    }
+}
+moveAnimal({ type: 'horse', runningSpeed: 10 });
+moveAnimal({ type: 'bird', flyingSpeed: 15 });

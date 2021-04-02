@@ -22,7 +22,7 @@ type Numeric = number | boolean;
 
 type Universal = Combinable & Numeric;
 
-// Guard Type
+// Type Guards 
 function add(a: Combinable, b: Combinable) {
     if(typeof a === 'string' || typeof b === 'string') { // Type Guard
         return a.toString() + b.toString();
@@ -74,3 +74,37 @@ function useVehicle(vehicle: Vehicle) {
 
 useVehicle(v1);
 useVehicle(v2);
+
+// Discriminated Unions
+
+interface Bird {
+    type: 'bird';
+    flyingSpeed: number;
+}
+
+interface Horse {
+    type: 'horse';
+    runningSpeed: number;
+}
+
+type Animal = Bird | Horse;
+
+function moveAnimal(animal: Animal) {
+    let speed;
+    switch (animal.type) {
+        case 'bird':
+            speed = animal.flyingSpeed;
+            console.log('Moving with speed: ' + speed);
+            break;
+        case 'horse':
+            speed = animal.runningSpeed;
+            console.log('Moving with speed: ' + speed);
+            break;
+
+        default:
+            break;
+    }
+}
+
+moveAnimal({type: 'horse', runningSpeed: 10});
+moveAnimal({type: 'bird', flyingSpeed: 15});
