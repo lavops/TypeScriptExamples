@@ -23,6 +23,8 @@ type Numeric = number | boolean;
 type Universal = Combinable & Numeric;
 
 // Type Guards 
+function add(a: number, b: number): number; // Overloading
+function add(a: string, b: string): string;
 function add(a: Combinable, b: Combinable) {
     if(typeof a === 'string' || typeof b === 'string') { // Type Guard
         return a.toString() + b.toString();
@@ -123,7 +125,25 @@ interface ErrorContainer {
     [prop: string]: string;
 }
 
+// Property mora da bude string kao i vrednost
 const erroBag: ErrorContainer = {
-    error: 'Not A Valid email'
+    error: 'Not A Valid email',
+    username: 'Must start with a capital character'
 };
 
+// Optional Chaining
+
+const FetchedUserData = {
+    id: 'u1',
+    name: 'Example',
+    job: {title: 'CEO'}
+}
+
+console.log(FetchedUserData?.job?.title);
+
+// Nullish
+
+const userInputExample = '';
+const storedData = userInputExample || 'DEFAULT';
+
+console.log(storedData);

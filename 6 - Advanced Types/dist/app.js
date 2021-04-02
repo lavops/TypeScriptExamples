@@ -1,10 +1,10 @@
 "use strict";
+var _a;
 const e1 = {
     name: 'Example',
     privilages: ['create-server'],
     startDate: new Date()
 };
-// Type Guards 
 function add(a, b) {
     if (typeof a === 'string' || typeof b === 'string') { // Type Guard
         return a.toString() + b.toString();
@@ -67,6 +67,19 @@ const userInput = document.getElementById('input');
 if (userInput) {
     userInput.value = 'Hi there!';
 }
+// Property mora da bude string kao i vrednost
 const erroBag = {
-    error: 'Not A Valid email'
+    error: 'Not A Valid email',
+    username: 'Must start with a capital character'
 };
+// Optional Chaining
+const FetchedUserData = {
+    id: 'u1',
+    name: 'Example',
+    job: { title: 'CEO' }
+};
+console.log((_a = FetchedUserData === null || FetchedUserData === void 0 ? void 0 : FetchedUserData.job) === null || _a === void 0 ? void 0 : _a.title);
+// Nullish
+const userInputExample = '';
+const storedData = userInputExample || 'DEFAULT';
+console.log(storedData);
