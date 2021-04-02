@@ -108,3 +108,12 @@ function moveAnimal(animal: Animal) {
 
 moveAnimal({type: 'horse', runningSpeed: 10});
 moveAnimal({type: 'bird', flyingSpeed: 15});
+
+// Type Casting
+// ILI <HTMLInputElement>EXAMPLE ili EXAMPLE as HTMLInputElement
+
+const userInput = document.getElementById('input'); 
+if(userInput){
+    (userInput as HTMLInputElement).value = 'Hi there!';
+}
+
