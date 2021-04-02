@@ -117,3 +117,13 @@ if(userInput){
     (userInput as HTMLInputElement).value = 'Hi there!';
 }
 
+// Index properties
+
+interface ErrorContainer {
+    [prop: string]: string;
+}
+
+const erroBag: ErrorContainer = {
+    error: 'Not A Valid email'
+};
+

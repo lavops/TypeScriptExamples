@@ -67,3 +67,6 @@ const userInput = document.getElementById('input');
 if (userInput) {
     userInput.value = 'Hi there!';
 }
+const erroBag = {
+    error: 'Not A Valid email'
+};
