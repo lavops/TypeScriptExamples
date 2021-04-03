@@ -24,3 +24,35 @@ function countAndDescribe(element) {
 }
 console.log(countAndDescribe('Hi There'));
 console.log(countAndDescribe(['Proba', 'Proba']));
+// keyof
+function extractAndConvert(obj, key) {
+    return 'Value: ' + obj[key];
+}
+console.log(extractAndConvert({ name: 'Example' }, 'name'));
+// Generic Classes
+class DataStorage {
+    constructor() {
+        this.data = [];
+    }
+    addItem(item) {
+        this.data.push(item);
+    }
+    removeItem(item) {
+        if (this.data.indexOf(item) === -1)
+            return;
+        this.data.splice(this.data.indexOf(item), 1);
+    }
+    getItems() {
+        return [...this.data];
+    }
+}
+const textStorage = new DataStorage();
+textStorage.addItem('Example');
+textStorage.addItem('Proba');
+textStorage.removeItem('Example');
+console.log(textStorage.getItems());
+const numberStorage = new DataStorage();
+numberStorage.addItem(2);
+numberStorage.addItem(3);
+numberStorage.removeItem(2);
+console.log(numberStorage.getItems());
