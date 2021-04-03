@@ -11,3 +11,11 @@ promise.then(data => {
     console.log(newData);
 })
 
+// Creating a Generic Function
+
+function merge<T, U>(objA: T, objB: U) {
+    
+    return Object.assign(objA, objB);
+}
+
+const mergedObj = merge({name: 'Max'}, {age: 20}); // as Type
