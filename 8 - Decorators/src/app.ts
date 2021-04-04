@@ -60,6 +60,7 @@ function Log4(target: any, name: string | Symbol, position: number) {
     console.log(name);
     console.log(position);
 }
+
 class Product {
     @Log
     title: string;
@@ -85,3 +86,33 @@ class Product {
         return this._price * (1 + tax);
     }
 }
+
+const p1 = new Product('Book', 90);
+const p2 = new Product('Book 2', 100);
+
+function Autobind(_: any, _2: string | Symbol, descriptor: PropertyDescriptor) {
+    const originalMethod = descriptor.value;
+    const adjustedDescriptor: PropertyDescriptor = {
+        configurable: true,
+        enumerable: false,
+        get() {
+            const boundFn = originalMethod.bind(this);
+            return boundFn;
+        }
+    }
+    return adjustedDescriptor;
+}
+
+class Printer {
+    message = "This works!";
+
+    @Autobind
+    showMessage() {
+        console.log(this.message);
+    }
+}
+
+const p = new Printer();
+
+const button = document.querySelector('button')!;
+button.addEventListener('click', p.showMessage);
