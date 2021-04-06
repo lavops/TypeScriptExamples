@@ -1,3 +1,38 @@
+// Validation
+
+interface Validatable {
+    value: string | number;
+    required?: boolean;
+    minLength?: number;
+    maxLength?: number;
+    min?: number;
+    max?: number;
+}
+
+function validate(ValidatableInput: Validatable) {
+    let isValid = true;
+
+    if(ValidatableInput.required) {
+        isValid = isValid && ValidatableInput.value.toString().trim().length !== 0;
+    }
+    if(ValidatableInput.minLength != null && typeof ValidatableInput.value === 'string') {
+        isValid = isValid && ValidatableInput.value.length > ValidatableInput.minLength;
+    }
+    if(ValidatableInput.maxLength != null && typeof ValidatableInput.value === 'string') {
+        isValid = isValid && ValidatableInput.value.length < ValidatableInput.maxLength;
+    }
+    if(ValidatableInput.min != null && typeof ValidatableInput.value === 'number') {
+        isValid = isValid && ValidatableInput.value > ValidatableInput.min;
+    }
+    if(ValidatableInput.max != null && typeof ValidatableInput.value === 'number') {
+        isValid = isValid && ValidatableInput.value < ValidatableInput.max;
+    }
+    
+    console.log(ValidatableInput.value, isValid);
+
+    return isValid;
+}
+
 // autobind decorator
 
 function Autobind(_: any, _2: string, descriptor: PropertyDescriptor) {
@@ -44,7 +79,11 @@ class ProjectInput {
         const decsription = this.descriptionInputElement.value;
         const people = this.peopleInputElement.value;
 
-        if(title.trim().length === 0 || decsription.trim().length === 0 || people.trim().length === 0) {
+        const titleValidatable: Validatable = {value: title, required: true};
+        const descriptionValidatable: Validatable = {value: decsription, required: true, minLength: 5};
+        const peopleValidatable: Validatable = {value: +people, required: true, min: 1, max: 5};
+
+        if(!validate(titleValidatable) || !validate(descriptionValidatable) || !validate(peopleValidatable)) {
             alert("Invalid input");
             return;
         } else {
@@ -66,6 +105,8 @@ class ProjectInput {
             const [title, description, people] = userInput;
             console.log(title, description, people);
         }
+
+        this.clearInputs();
     }
 
     private configure() {
