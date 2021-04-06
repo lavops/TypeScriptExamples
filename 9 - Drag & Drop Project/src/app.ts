@@ -1,4 +1,4 @@
-// Project Type
+// Project Type and Listner
 
 enum ProjectStatus {ACTIVE, FINISHED};
 class Project {
@@ -72,7 +72,7 @@ function validate(ValidatableInput: Validatable) {
         isValid = isValid && ValidatableInput.value < ValidatableInput.max;
     }
     
-    console.log(ValidatableInput.value, isValid);
+    //console.log(ValidatableInput.value, isValid);
 
     return isValid;
 }
@@ -110,7 +110,13 @@ class ProjectList {
         this.element.id = `${type}-projects`;
 
         projectState.addListener((projects: Project[]) => {
-            this.assignedProjects = projects;
+            const relevantProjects = projects.filter(project => {
+                if (this.type === 'active'){
+                    return project.status === ProjectStatus.ACTIVE;
+                }
+                return project.status === ProjectStatus.FINISHED;
+            })
+            this.assignedProjects = relevantProjects;
             this.renderProjects();
         });
 
@@ -120,6 +126,9 @@ class ProjectList {
 
     private renderProjects() {
         const listEl = document.getElementById(`${this.type}-projects-list`)! as HTMLUListElement;
+
+        listEl.innerHTML = '';
+
         for(const projectItem of this.assignedProjects) {
             const listItem = document.createElement('li');
             listItem.textContent = projectItem.title;
@@ -194,7 +203,7 @@ class ProjectInput {
         if(Array.isArray(userInput)) {
             const [title, description, people] = userInput;
             projectState.addProject(title, description, people);
-            console.log(title, description, people);
+            //console.log(title, description, people);
         }
 
         this.clearInputs();

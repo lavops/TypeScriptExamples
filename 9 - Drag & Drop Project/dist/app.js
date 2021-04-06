@@ -1,5 +1,5 @@
 "use strict";
-// Project Type
+// Project Type and Listner
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -63,7 +63,7 @@ function validate(ValidatableInput) {
     if (ValidatableInput.max != null && typeof ValidatableInput.value === 'number') {
         isValid = isValid && ValidatableInput.value < ValidatableInput.max;
     }
-    console.log(ValidatableInput.value, isValid);
+    //console.log(ValidatableInput.value, isValid);
     return isValid;
 }
 // autobind decorator
@@ -90,7 +90,13 @@ class ProjectList {
         this.element = importedNode.firstElementChild;
         this.element.id = `${type}-projects`;
         projectState.addListener((projects) => {
-            this.assignedProjects = projects;
+            const relevantProjects = projects.filter(project => {
+                if (this.type === 'active') {
+                    return project.status === ProjectStatus.ACTIVE;
+                }
+                return project.status === ProjectStatus.FINISHED;
+            });
+            this.assignedProjects = relevantProjects;
             this.renderProjects();
         });
         this.attach();
@@ -98,6 +104,7 @@ class ProjectList {
     }
     renderProjects() {
         const listEl = document.getElementById(`${this.type}-projects-list`);
+        listEl.innerHTML = '';
         for (const projectItem of this.assignedProjects) {
             const listItem = document.createElement('li');
             listItem.textContent = projectItem.title;
@@ -153,7 +160,7 @@ class ProjectInput {
         if (Array.isArray(userInput)) {
             const [title, description, people] = userInput;
             projectState.addProject(title, description, people);
-            console.log(title, description, people);
+            //console.log(title, description, people);
         }
         this.clearInputs();
     }
