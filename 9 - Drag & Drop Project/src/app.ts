@@ -62,9 +62,21 @@ enum ProjectStatus {
         ProjectStatus.Active
       );
       this.projects.push(newProject);
-      for (const listenerFn of this.listeners) {
-        listenerFn(this.projects.slice());
-      }
+      this.updateListneres();
+    }
+
+    moveProject(projectId: string, newStatus: ProjectStatus) {
+        const project = this.projects.find(x => x.id === projectId);
+        if(project && project.status != newStatus) {
+            project.status = newStatus;
+            this.updateListneres();
+        }
+    }
+
+    private updateListneres() {
+        for (const listenerFn of this.listeners) {
+            listenerFn(this.projects.slice());
+        }
     }
   }
   
@@ -212,7 +224,8 @@ enum ProjectStatus {
 
     @autobind
     dropHandler(event: DragEvent): void {
-        
+        const projectId = event.dataTransfer!.getData('text/plain');
+        projectState.moveProject(projectId, this.type === 'active' ? ProjectStatus.Active : ProjectStatus.Finished);
     }
 
     @autobind

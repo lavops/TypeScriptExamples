@@ -43,6 +43,16 @@ class ProjectState extends State {
     addProject(title, description, numOfPeople) {
         const newProject = new Project(Math.random().toString(), title, description, numOfPeople, ProjectStatus.Active);
         this.projects.push(newProject);
+        this.updateListneres();
+    }
+    moveProject(projectId, newStatus) {
+        const project = this.projects.find(x => x.id === projectId);
+        if (project && project.status != newStatus) {
+            project.status = newStatus;
+            this.updateListneres();
+        }
+    }
+    updateListneres() {
         for (const listenerFn of this.listeners) {
             listenerFn(this.projects.slice());
         }
@@ -152,6 +162,8 @@ class ProjectList extends Component {
         }
     }
     dropHandler(event) {
+        const projectId = event.dataTransfer.getData('text/plain');
+        projectState.moveProject(projectId, this.type === 'active' ? ProjectStatus.Active : ProjectStatus.Finished);
     }
     dragLeaveHandler(_) {
         const listEl = this.element.querySelector('ul');
