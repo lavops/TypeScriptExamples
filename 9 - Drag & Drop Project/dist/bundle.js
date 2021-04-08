@@ -7,68 +7,6 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 };
 var App;
 (function (App) {
-    // Project Type
-    let ProjectStatus;
-    (function (ProjectStatus) {
-        ProjectStatus[ProjectStatus["Active"] = 0] = "Active";
-        ProjectStatus[ProjectStatus["Finished"] = 1] = "Finished";
-    })(ProjectStatus = App.ProjectStatus || (App.ProjectStatus = {}));
-    class Project {
-        constructor(id, title, description, people, status) {
-            this.id = id;
-            this.title = title;
-            this.description = description;
-            this.people = people;
-            this.status = status;
-        }
-    }
-    App.Project = Project;
-})(App || (App = {}));
-var App;
-(function (App) {
-    class State {
-        constructor() {
-            this.listeners = [];
-        }
-        addListener(listenerFn) {
-            this.listeners.push(listenerFn);
-        }
-    }
-    class ProjectState extends State {
-        constructor() {
-            super();
-            this.projects = [];
-        }
-        static getInstance() {
-            if (this.instance) {
-                return this.instance;
-            }
-            this.instance = new ProjectState();
-            return this.instance;
-        }
-        addProject(title, description, numOfPeople) {
-            const newProject = new App.Project(Math.random().toString(), title, description, numOfPeople, App.ProjectStatus.Active);
-            this.projects.push(newProject);
-            this.updateListneres();
-        }
-        moveProject(projectId, newStatus) {
-            const project = this.projects.find(x => x.id === projectId);
-            if (project && project.status != newStatus) {
-                project.status = newStatus;
-                this.updateListneres();
-            }
-        }
-        updateListneres() {
-            for (const listenerFn of this.listeners) {
-                listenerFn(this.projects.slice());
-            }
-        }
-    }
-    App.ProjectState = ProjectState;
-    App.projectState = ProjectState.getInstance();
-})(App || (App = {}));
-var App;
-(function (App) {
     function validate(validatableInput) {
         let isValid = true;
         if (validatableInput.required) {
@@ -126,7 +64,53 @@ var App;
     }
     App.Component = Component;
 })(App || (App = {}));
+var App;
+(function (App) {
+    class State {
+        constructor() {
+            this.listeners = [];
+        }
+        addListener(listenerFn) {
+            this.listeners.push(listenerFn);
+        }
+    }
+    class ProjectState extends State {
+        constructor() {
+            super();
+            this.projects = [];
+        }
+        static getInstance() {
+            if (this.instance) {
+                return this.instance;
+            }
+            this.instance = new ProjectState();
+            return this.instance;
+        }
+        addProject(title, description, numOfPeople) {
+            const newProject = new App.Project(Math.random().toString(), title, description, numOfPeople, App.ProjectStatus.Active);
+            this.projects.push(newProject);
+            this.updateListneres();
+        }
+        moveProject(projectId, newStatus) {
+            const project = this.projects.find(x => x.id === projectId);
+            if (project && project.status != newStatus) {
+                project.status = newStatus;
+                this.updateListneres();
+            }
+        }
+        updateListneres() {
+            for (const listenerFn of this.listeners) {
+                listenerFn(this.projects.slice());
+            }
+        }
+    }
+    App.ProjectState = ProjectState;
+    App.projectState = ProjectState.getInstance();
+})(App || (App = {}));
+/// <reference path="../utils/validation.ts" />
+/// <reference path="../decorators/autobind.ts" />
 /// <reference path="base-component.ts" />
+/// <reference path="../state/project-state.ts" />
 var App;
 (function (App) {
     // ProjectInput Class
@@ -177,6 +161,8 @@ var App;
     ], ProjectInput.prototype, "submitHandler", null);
     App.ProjectInput = ProjectInput;
 })(App || (App = {}));
+/// <reference path="../decorators/autobind.ts" />
+/// <reference path="../models/drag-drop.ts" />
 /// <reference path="base-component.ts" />
 var App;
 (function (App) {
@@ -221,6 +207,8 @@ var App;
     ], ProjectItem.prototype, "dragEndHandler", null);
     App.ProjectItem = ProjectItem;
 })(App || (App = {}));
+/// <reference path="../decorators/autobind.ts" />
+/// <reference path="../models/drag-drop.ts" />
 /// <reference path="base-component.ts" />
 /// <reference path="project-item.ts" />
 var App;
@@ -291,11 +279,6 @@ var App;
     ], ProjectList.prototype, "dragLeaveHandler", null);
     App.ProjectList = ProjectList;
 })(App || (App = {}));
-/// <reference path="models/drag-drop.ts" />
-/// <reference path="models/project.ts" />
-/// <reference path="state/project-state.ts" />
-/// <reference path="utils/validation.ts" />
-/// <reference path="decorators/autobind.ts" />
 /// <reference path="components/project-input.ts" />
 /// <reference path="components/project-list.ts" />
 var App;
@@ -303,4 +286,23 @@ var App;
     new App.ProjectInput();
     new App.ProjectList('active');
     new App.ProjectList('finished');
+})(App || (App = {}));
+var App;
+(function (App) {
+    // Project Type
+    let ProjectStatus;
+    (function (ProjectStatus) {
+        ProjectStatus[ProjectStatus["Active"] = 0] = "Active";
+        ProjectStatus[ProjectStatus["Finished"] = 1] = "Finished";
+    })(ProjectStatus = App.ProjectStatus || (App.ProjectStatus = {}));
+    class Project {
+        constructor(id, title, description, people, status) {
+            this.id = id;
+            this.title = title;
+            this.description = description;
+            this.people = people;
+            this.status = status;
+        }
+    }
+    App.Project = Project;
 })(App || (App = {}));
