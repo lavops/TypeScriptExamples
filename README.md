@@ -1,7 +1,5 @@
 # TypeScript Examples
 
-[TypeScript Course](https://www.udemy.com/course/understanding-typescript/)
-
 Table of Contents:
  - Types and how to use them
  - How the TypeScript Compiler works
