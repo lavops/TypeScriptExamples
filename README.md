@@ -13,4 +13,3 @@ Table of Contents:
  - How to set up a TypeScript project with Webpack
  - Or how to set up a plain-TypeScript Workflow
  - How to use TypeScript together with Node/ Express
-
